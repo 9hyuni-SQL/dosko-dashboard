@@ -82,26 +82,26 @@ DEFAULT_ROLE_TABS = {
 
 
 def calc_initial_password(emp_no, birth_date="", phone_no=""):
-    """초기 비밀번호 계산:
-    - 기본: 사번 + 휴대전화 뒷자리 4자리 (총 8자리)
-    - 박철민 과장(사번 1195): 사번 + 생일 월일 4자리 (11950427)
-    - 전화번호/생일 누락 시 기본 대체
+    """초기 비밀번호 계산: 4자리
+    - 기본: 휴대전화 뒷자리 4자리
+    - 박철민 과장(사번 1195): 생일 월일 4자리 (0427)
+    - 전화번호/생일 누락 시 사번 4자리로 대체
     """
     eno = str(emp_no or '').strip()
     if eno == '1195':
         b_clean = re.sub(r'[^0-9]', '', str(birth_date or ''))
         if len(b_clean) >= 8:
-            return f"{eno}{b_clean[4:8]}"
+            return b_clean[4:8]
         elif len(b_clean) == 4:
-            return f"{eno}{b_clean}"
-        return f"{eno}0427"
+            return b_clean
+        return "0427"
     
     p_clean = re.sub(r'[^0-9]', '', str(phone_no or ''))
     if len(p_clean) >= 4:
-        return f"{eno}{p_clean[-4:]}"
+        return p_clean[-4:]
     
-    # 전화번호 누락 시 사번 4자리로 대체
-    return f"{eno}{eno}"
+    # 전화번호 누락 시 사번 4자리
+    return eno if len(eno) >= 4 else "0000"
 
 def validate_password_strength(password, emp_no="", gw_login_id="", pw_rule_type="OFFICE_COMPLEX"):
     pw = str(password or "").strip()
