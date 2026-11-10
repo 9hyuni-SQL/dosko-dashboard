@@ -15,6 +15,7 @@
 | **03. Git & 배포 실측** | 원격 사전 fetch, 회귀 검증, E2E 실측 배포 완료 기준 | [harness/03_git_and_deployment.md](harness/03_git_and_deployment.md) |
 | **04. 망분리 듀얼 네트워크** | 사무실망/현장망 게이트웨이 분리 및 USB 허브 구성 | [harness/04_dual_network_setup.md](harness/04_dual_network_setup.md) |
 | **05. 인증 및 사번 보안** | 생년월일 초기비번, 텐키패드, 4회 경고/6회 잠금 정책 | [harness/05_auth_and_security.md](harness/05_auth_and_security.md) |
+| **06. 무중단 자동 시작·와치독** | 윈도우 부팅 시 Silent 자동 실행 및 크래시 시 5초 자동 재시작 | [harness/06_autostart_watchdog.md](harness/06_autostart_watchdog.md) |
 
 ---
 
