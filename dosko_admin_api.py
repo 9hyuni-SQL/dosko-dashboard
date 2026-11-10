@@ -345,16 +345,17 @@ def reset_user_password(admin_user, data, client_ip):
     def _query_and_update():
         with dosko_db.get_db_connection() as conn:
             cur = conn.cursor()
-            row = cur.execute("SELECT user_id, birth_date FROM dbo.sec_users WHERE emp_no = ?", (emp_no,)).fetchone()
+            row = cur.execute("SELECT user_id, birth_date, phone_no FROM dbo.sec_users WHERE emp_no = ?", (emp_no,)).fetchone()
             if not row:
                 return None, None
             uid = row[0]
             bday = row[1] or ""
-            # 초기비번 계산: 사번 + 생년월일 6자리 (예: 1204 + 750312 -> 1204750312)
+            phone = row[2] or ""
+            # 초기비번 계산: 사번 + 휴대전화 뒷자리 4자리 (박철민: 사번 + 생일 월일 4자리)
             if custom_pw:
                 temp_pw = custom_pw
             else:
-                temp_pw = dosko_auth.calc_initial_password(emp_no, bday)
+                temp_pw = dosko_auth.calc_initial_password(emp_no, bday, phone)
 
             pw_hash = dosko_auth.hash_password(temp_pw, iterations=310000)
             cur.execute(
